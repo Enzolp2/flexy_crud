@@ -1,0 +1,73 @@
+<?php
+
+namespace App\db;
+use \PDO;
+use \PDOException;
+
+    class Database{
+        /**
+         * Host de conexao com o banco de dados
+         * @var string
+         */
+        const HOST = 'localhost';
+
+        /**
+         * Nome do banco de daos
+         * @
+         */
+        const NAME = 'cornely';
+
+        /**
+         * Usuario do banco de dados
+         * @string
+         */
+        const USER = 'root';
+
+        /**
+         * Senha do banco de dados
+         * @string
+         */
+        const PASS = '1337';
+
+        /**
+         * Nome da tabela
+         * @var string
+         */
+        private $table;
+
+        /**
+         * Conexao com o banco de dados
+         * @var \PDO
+         */
+        private $connection;
+
+        /**
+         * Database constructor.
+         * @param string $table
+         */
+        public function __construct($table = null){
+            $this->table = $table;
+            $this->setConnection();
+        }
+
+        private function setConnection(){
+            try{
+                $this->connection = new PDO('mysql:host=' .self::HOST. ';dbname=' .self::NAME, self::USER, self::PASS);
+                $this->connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            }catch (\PDOException $e){
+                die('ERROR: ' .$e->getMessage());
+            }
+        }
+
+        /**
+         * Metodo responsavel por inserir dados no bd
+         * @param array $values
+         * @return integer
+         */
+        public function insert($values){
+            $query = 'INSERT INTO' .$this->table. '(id, titulo, descricao, imagem, estoque) VALUES (?,?,?,?,?)';
+
+            echo "$query";
+
+        }
+    }
